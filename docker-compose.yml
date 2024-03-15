@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  kali_terminal:
+    build:
+      context: ./kali_terminal
+      dockerfile: Dockerfile 
+    container_name: kali_terminal
+    #restart: always
+    ports:
+      - 5901:5901
+      - 6080:6080
+    networks:
+      net:
+        ipv4_address: 172.20.3.2
+
+  ubuntu_vnc:
+    build:
+      context: ./ubuntu_vnc
+      dockerfile: Dockerfile 
+    container_name: ubuntu_vnc
+    #restart: always
+    expose:
+      - 5901
+      - 6080
+    volumes:
+      - ./ubuntu_vnc/coredump/:/var/lib/systemd/coredump/
+      - ./ubuntu_vnc/Desktop/:/root/Desktop/
+    networks:
+      net:
+        ipv4_address: 172.20.3.3
+
+  ubuntu_2:
+    image: nginx
+    container_name: ubuntu_2
+    restart: always
+      #ports:
+      #- 22:22
+    networks:
+      net:
+        ipv4_address: 172.20.3.4
+
+  # ubuntu_3:
+  #   image: nginx 
+  #   container_name: ubuntu_3
+  #   restart: always
+  #     #ports:
+  #     #- 21:21
+  #   networks:
+  #     net:
+  #       ipv4_address: 172.20.3.4
+
+
+
+networks:
+  net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.3.0/24
+          gateway: 172.20.3.1
+

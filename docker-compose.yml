@@ -8,10 +8,29 @@ services:
     container_name: kali_terminal
     #restart: always
     ports:
-      - 5901:5901
-      - 6080:6080
+      - 8080:8080
+      - 8081:8081
+      - 8082:8082
+      - 8083:8083
+      - 8084:8084
+      - 8085:8085
+      - 8086:8086
+      - 8087:8087
+      - 8088:8088
+      - 8089:8089
+      - 8090:8090
+      - 8091:8091
+      - 8092:8092
+      - 8093:8093
+      - 8094:8094
+      - 8095:8095
+      - 8096:8096
+      - 8097:8097
+      - 8098:8098
+      - 8099:8099
+      - 8100:8100
     networks:
-      net:
+      external_net:
         ipv4_address: 172.20.3.2
 
   ubuntu_vnc:
@@ -21,14 +40,16 @@ services:
     container_name: ubuntu_vnc
     #restart: always
     expose:
-      - 5901
-      - 6080
+      - 8080
+      - 161/udp
     volumes:
       - ./ubuntu_vnc/coredump/:/var/lib/systemd/coredump/
       - ./ubuntu_vnc/Desktop/:/root/Desktop/
     networks:
-      net:
+      external_net:
         ipv4_address: 172.20.3.3
+      internal_net:
+        ipv4_address: 10.10.3.2
 
   ubuntu_2:
     image: nginx
@@ -37,8 +58,8 @@ services:
       #ports:
       #- 22:22
     networks:
-      net:
-        ipv4_address: 172.20.3.4
+      internal_net:
+        ipv4_address: 10.10.3.3
 
   # ubuntu_3:
   #   image: nginx 
@@ -53,10 +74,16 @@ services:
 
 
 networks:
-  net:
+  external_net:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.3.0/24
           gateway: 172.20.3.1
 
+  internal_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.3.0/24
+          gateway: 10.10.3.1

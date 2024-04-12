@@ -1,37 +1,37 @@
 version: '3.9'
 
 services:
-  kali_terminal:
-    build:
-      context: ./kali_terminal
-      dockerfile: Dockerfile 
-    container_name: kali_terminal
-    #restart: always
-    ports:
-      - 8080:8080
-      - 8081:8081
-      - 8082:8082
-      - 8083:8083
-      - 8084:8084
-      - 8085:8085
-      - 8086:8086
-      - 8087:8087
-      - 8088:8088
-      - 8089:8089
-      - 8090:8090
-      - 8091:8091
-      - 8092:8092
-      - 8093:8093
-      - 8094:8094
-      - 8095:8095
-      - 8096:8096
-      - 8097:8097
-      - 8098:8098
-      - 8099:8099
-      - 8100:8100
-    networks:
-      external_net:
-        ipv4_address: 172.20.3.2
+  #  kali_terminal:
+  #  build:
+  #    context: ./kali_terminal
+  #    dockerfile: Dockerfile 
+  #  container_name: kali_terminal
+  #  #restart: always
+  #  ports:
+  #    - 8080:8080
+  #    - 8081:8081
+  #    - 8082:8082
+  #    - 8083:8083
+  #    - 8084:8084
+  #    - 8085:8085
+  #    - 8086:8086
+  #    - 8087:8087
+  #    - 8088:8088
+  #    - 8089:8089
+  #    - 8090:8090
+  #    - 8091:8091
+  #    - 8092:8092
+  #    - 8093:8093
+  #    - 8094:8094
+  #    - 8095:8095
+  #    - 8096:8096
+  #    - 8097:8097
+  #    - 8098:8098
+  #    - 8099:8099
+  #    - 8100:8100
+  #  networks:
+  #      external_net:
+  #      ipv4_address: 172.20.3.2
 
   ubuntu_vnc:
     build:
@@ -49,17 +49,20 @@ services:
       external_net:
         ipv4_address: 172.20.3.3
       internal_net:
-        ipv4_address: 10.10.3.2
+        ipv4_address: 10.10.3.3
 
-  ubuntu_2:
-    image: nginx
-    container_name: ubuntu_2
+  ftp_server:
+    build:
+      context: ./ftp_server
+      dockerfile: Dockerfile
+    container_name: ftp_server
     restart: always
-      #ports:
-      #- 22:22
+    expose:
+      - 20
+      - 21
     networks:
       internal_net:
-        ipv4_address: 10.10.3.3
+        ipv4_address: 10.10.3.4
 
   # ubuntu_3:
   #   image: nginx 

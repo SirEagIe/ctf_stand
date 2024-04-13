@@ -1,13 +1,11 @@
-FROM ubuntu:24.04
+FROM ubuntu:latest
 
 RUN apt -y update
 RUN apt -y install novnc python3-websockify python3-numpy expect
 RUN apt -y install tigervnc-standalone-server xfce4 dbus-x11 xterm
 RUN apt -y install keepass2
-RUN apt -y install openssh-server
+RUN apt -y install openssh-server sudo vim ftp curl
 RUN apt -y install snmp snmpd snmp-mibs-downloader
-RUN apt -y install sudo
-RUN apt -y install vim
 
 COPY snmpd.conf /etc/snmp/snmpd.conf
 
@@ -17,6 +15,12 @@ RUN apt clean
 
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
+COPY check_connection.sh .
+RUN chmod +x check_connection.sh
+
+
+RUN useradd john -s /bin/bash -b /home -p $(perl -e "print crypt('2uMxwwLyqoZzPl0PC5kSOEB7KAMDpw2S','sa');")
+RUN mkdir /home/john/
+RUN chown -R john:john /home/john
 
 ENTRYPOINT ["./entrypoint.sh"]
-# V3rY_Str0NG_P4$$w0rD

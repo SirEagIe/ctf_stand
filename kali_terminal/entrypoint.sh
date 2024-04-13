@@ -1,6 +1,7 @@
 #!/bin/bash
 
 service nginx start
+echo "172.20.3.3 todoornottodo.ru" >> /etc/hosts
 sed -i "s\UI.initSetting('path', 'websockify');\UI.initSetting('path', window.location.pathname.replace(/[^/]*$/, '').substring(1) + 'websockify');\g" /usr/share/novnc/app/ui.js
 
 i=0
@@ -16,11 +17,11 @@ while read creds; do
     su $user -c "chmod 600 ~/.vnc/passwd"
     su $user -c "tigervncserver -xstartup /usr/bin/startxfce4 -geometry 1600x900 -localhost no :$i"
     su $user -c "websockify -D --web=/usr/share/novnc/ --cert=/home/ubuntu/novnc.pem $[8080+$i] localhost:$[5900+$i]"
-    su $user -c "cd ~"
+    su $user -c "sed -i '\$a Path=/' ~/.config/xfce4/panel/launcher-7/*"
     i=$[$i+1]
 done < creds.txt
 
-./vncpasswd.sh qweqwe123
+./vncpasswd.sh ZCDezj5lBsFwFUKr7I4y
 tigervncserver -xstartup /usr/bin/startxfce4 -geometry 1600x900 -localhost no :20
 websockify -D --web=/usr/share/novnc/ --cert=/home/ubuntu/novnc.pem 8100 localhost:5920
 

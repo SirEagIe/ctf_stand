@@ -6,41 +6,40 @@ services:
       context: ./kali_terminal
       dockerfile: Dockerfile 
     container_name: kali_terminal
-    #restart: always
     ports:
       - 8888:8888
     networks:
       external_net:
         ipv4_address: 172.20.3.2
+    restart: always
 
   ubuntu_admin:
     build:
       context: ./ubuntu_admin
       dockerfile: Dockerfile 
     container_name: ubuntu_admin
-    #restart: always
     expose:
       - 161/udp
       - 22
     volumes:
-      - ./ubuntu_vnc/coredump/:/var/lib/systemd/coredump/
-      - ./ubuntu_vnc/Desktop/:/root/Desktop/
+      - ./ubuntu_admin/coredump/:/var/lib/systemd/coredump/
+      - ./ubuntu_admin/Desktop/:/root/Desktop/
     networks:
       internal_net:
         ipv4_address: 10.10.3.2
+    restart: always
 
   ftp_server:
     build:
       context: ./ftp_server
       dockerfile: Dockerfile
     container_name: ftp_server
-    restart: always
     expose:
-      - 20
       - 21
     networks:
       internal_net:
         ipv4_address: 10.10.3.4
+    restart: always
 
   web_flask:
      build:
@@ -49,7 +48,6 @@ services:
      container_name: web_flask
      volumes:
        - ./web_flask/app/todo_app/instance/:/app/instance/
-     restart: always
      expose:
        - 80
        - 22
@@ -58,6 +56,7 @@ services:
          ipv4_address: 172.20.3.3
        internal_net:
          ipv4_address: 10.10.3.3
+     restart: always
 
 
 networks:

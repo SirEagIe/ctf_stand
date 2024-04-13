@@ -1,12 +1,16 @@
-FROM ubuntu:24.04
+FROM ubuntu:latest
 
 RUN apt -y update
-RUN apt -y install
+RUN apt -y install vsftpd vim sudo
 
 RUN apt clean
 
+RUN useradd john -s /bin/bash -b /home -p $(perl -e "print crypt('VU5GNkumWT7SpI^!KAVZwSiiK1Dz@h!M','sa');") -G sudo
+RUN mkdir -p /home/john/userfiles
+RUN chown root:root /home/john
+
+COPY ./flag.txt /home/john/userfiles/flag.txt
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
-# V3rY_Str0NG_P4$$w0rD

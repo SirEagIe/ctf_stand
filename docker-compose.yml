@@ -1,55 +1,33 @@
 version: '3.9'
 
 services:
-  #  kali_terminal:
-  #  build:
-  #    context: ./kali_terminal
-  #    dockerfile: Dockerfile 
-  #  container_name: kali_terminal
-  #  #restart: always
-  #  ports:
-  #    - 8080:8080
-  #    - 8081:8081
-  #    - 8082:8082
-  #    - 8083:8083
-  #    - 8084:8084
-  #    - 8085:8085
-  #    - 8086:8086
-  #    - 8087:8087
-  #    - 8088:8088
-  #    - 8089:8089
-  #    - 8090:8090
-  #    - 8091:8091
-  #    - 8092:8092
-  #    - 8093:8093
-  #    - 8094:8094
-  #    - 8095:8095
-  #    - 8096:8096
-  #    - 8097:8097
-  #    - 8098:8098
-  #    - 8099:8099
-  #    - 8100:8100
-  #  networks:
-  #      external_net:
-  #      ipv4_address: 172.20.3.2
-
-  ubuntu_vnc:
+  kali_terminal:
     build:
-      context: ./ubuntu_vnc
+      context: ./kali_terminal
       dockerfile: Dockerfile 
-    container_name: ubuntu_vnc
+    container_name: kali_terminal
+    #restart: always
+    ports:
+      - 8888:8888
+    networks:
+      external_net:
+        ipv4_address: 172.20.3.2
+
+  ubuntu_admin:
+    build:
+      context: ./ubuntu_admin
+      dockerfile: Dockerfile 
+    container_name: ubuntu_admin
     #restart: always
     expose:
-      - 8080
       - 161/udp
+      - 22
     volumes:
       - ./ubuntu_vnc/coredump/:/var/lib/systemd/coredump/
       - ./ubuntu_vnc/Desktop/:/root/Desktop/
     networks:
-      external_net:
-        ipv4_address: 172.20.3.3
       internal_net:
-        ipv4_address: 10.10.3.3
+        ipv4_address: 10.10.3.2
 
   ftp_server:
     build:
@@ -64,16 +42,22 @@ services:
       internal_net:
         ipv4_address: 10.10.3.4
 
-  # ubuntu_3:
-  #   image: nginx 
-  #   container_name: ubuntu_3
-  #   restart: always
-  #     #ports:
-  #     #- 21:21
-  #   networks:
-  #     net:
-  #       ipv4_address: 172.20.3.4
-
+  web_flask:
+     build:
+       context: ./web_flask
+       dockerfile: Dockerfile
+     container_name: web_flask
+     volumes:
+       - ./web_flask/app/todo_app/instance/:/app/instance/
+     restart: always
+     expose:
+       - 80
+       - 22
+     networks:
+       external_net:
+         ipv4_address: 172.20.3.3
+       internal_net:
+         ipv4_address: 10.10.3.3
 
 
 networks:

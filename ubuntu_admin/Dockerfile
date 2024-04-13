@@ -9,15 +9,9 @@ RUN apt -y install snmp snmpd snmp-mibs-downloader
 RUN apt -y install sudo
 RUN apt -y install vim
 
-COPY vncpasswd.sh .
 COPY snmpd.conf /etc/snmp/snmpd.conf
-COPY sudoers /etc/sudoers
 
 RUN chmod +s /usr/bin/python3
-
-RUN chmod +x vncpasswd.sh
-RUN ./vncpasswd.sh
-RUN rm vncpasswd.sh
 
 RUN apt clean
 

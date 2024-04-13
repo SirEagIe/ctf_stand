@@ -5,9 +5,9 @@ RUN apt -y install novnc python3-websockify python3-numpy expect
 RUN apt -y install tigervnc-standalone-server dbus-x11 xterm
 RUN apt -y install kali-desktop-xfce
 RUN apt -y install openssh-server
-# git vim nmap
-
+RUN apt -y install git vim nmap
 RUN apt -y install nginx
+
 COPY nginx.conf /etc/nginx/conf.d/nginx.conf
 
 WORKDIR /root
@@ -26,4 +26,3 @@ COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["/root/entrypoint.sh"]
-# V3rY_Str0NG_P4$$w0rD

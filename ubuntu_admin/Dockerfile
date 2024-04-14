@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt -y update
 RUN apt -y install novnc python3-websockify python3-numpy expect
 RUN apt -y install tigervnc-standalone-server xfce4 dbus-x11 xterm

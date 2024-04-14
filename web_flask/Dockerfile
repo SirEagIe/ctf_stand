@@ -1,5 +1,6 @@
 FROM python:latest 
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt -y update
 RUN apt -y install ssh sudo vim iproute2
 

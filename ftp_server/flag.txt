@@ -1,1 +1,1 @@
-FECTF{this_is_flag}
+FECTF{s0_l0ng_k1llch41n_0_o}

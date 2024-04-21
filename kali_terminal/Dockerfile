@@ -6,6 +6,7 @@ RUN apt -y install novnc python3-websockify python3-numpy expect
 RUN apt -y install tigervnc-standalone-server dbus-x11 xterm
 RUN apt -y install kali-desktop-xfce openssh-server nginx
 RUN apt -y install git vim nmap
+RUN apt -y install python3-pip
 
 COPY nginx.conf /etc/nginx/conf.d/nginx.conf
 

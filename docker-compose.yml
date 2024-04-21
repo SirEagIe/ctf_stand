@@ -21,9 +21,6 @@ services:
     expose:
       - 161/udp
       - 22
-    volumes:
-      - ./ubuntu_admin/coredump/:/var/lib/systemd/coredump/
-      - ./ubuntu_admin/Desktop/:/root/Desktop/
     networks:
       internal_net:
         ipv4_address: 10.10.3.2
@@ -46,8 +43,6 @@ services:
        context: ./web_flask
        dockerfile: Dockerfile
      container_name: web_flask
-     volumes:
-       - ./web_flask/app/todo_app/instance/:/app/instance/
      expose:
        - 80
        - 22

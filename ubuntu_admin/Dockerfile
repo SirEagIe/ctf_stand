@@ -24,4 +24,10 @@ RUN useradd john -s /bin/bash -b /home -p $(perl -e "print crypt('2uMxwwLyqoZzPl
 RUN mkdir /home/john/
 RUN chown -R john:john /home/john
 
+COPY Desktop /root/Desktop
+COPY coredump /var/lib/systemd/coredump
+
+RUN gzip -d /var/lib/systemd/coredump/*
+RUN chmod o-r /var/lib/systemd/coredump/*
+
 ENTRYPOINT ["./entrypoint.sh"]
